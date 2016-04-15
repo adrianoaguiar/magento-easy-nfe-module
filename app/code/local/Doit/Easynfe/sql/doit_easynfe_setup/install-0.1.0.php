@@ -11388,7 +11388,7 @@ $installer->addAttribute('catalog_product', 'nfe_orig',  array(
     'type'     => 'int',
     'label'    => 'Origem da Mercadoria',
     'input'    => 'select',
-    'source'   => 'easynfe_nfe/source_config_origem',
+    'source'   => 'doit_easynfe/source_config_origem',
     'global'   => Mage_Catalog_Model_Resource_Eav_Attribute::SCOPE_GLOBAL,
     'required' => true,
     'default'  => ''

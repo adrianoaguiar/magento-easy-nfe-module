@@ -4,20 +4,20 @@
  *
  * @title      Magento Easynfe NF-e
  * @category   General
- * @package    Easynfe_Nfe
+ * @package    Doit_Easynfe
  * @author     Indexa Development Team <desenvolvimento@indexainternet.com.br>
  * @copyright  Copyright (c) 2011 Indexa - http://www.indexainternet.com.br
  */
 
 
-class Easynfe_Nfe_Model_Resource_Sales_Order_Nf_Collection extends Easynfe_Nfe_Model_Resource_Db_Collection_Abstract{
+class Doit_Easynfe_Model_Resource_Sales_Order_Nf_Collection extends Doit_Easynfe_Model_Resource_Db_Collection_Abstract{
     
     /**
      * Initialize resource
      *
      */
     public function _construct(){
-        $this->_init('easynfe_nfe/sales_order_nf');
+        $this->_init('doit_easynfe/sales_order_nf');
     }
     
      /**
@@ -25,7 +25,7 @@ class Easynfe_Nfe_Model_Resource_Sales_Order_Nf_Collection extends Easynfe_Nfe_M
      *
      * @param string|array $status
      * 
-     * @return Easynfe_Nfe_Model_Resource_Sales_Order_Nf_Collection
+     * @return Doit_Easynfe_Model_Resource_Sales_Order_Nf_Collection
      */
     public function addStatusFilter($status){
         if (!empty($status)) {
@@ -42,7 +42,7 @@ class Easynfe_Nfe_Model_Resource_Sales_Order_Nf_Collection extends Easynfe_Nfe_M
      *
      * @param string|array $id
      * 
-     * @return Easynfe_Nfe_Model_Resource_Sales_Order_Nf_Collection
+     * @return Doit_Easynfe_Model_Resource_Sales_Order_Nf_Collection
      */
     public function addNfFilter($id){
         if (!empty($id)) {

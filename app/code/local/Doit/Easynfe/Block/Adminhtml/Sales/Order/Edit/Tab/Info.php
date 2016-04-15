@@ -6,11 +6,11 @@
  *
  * @title      Magento Easynfe NF-e
  * @category   General
- * @package    Easynfe_Nfe
+ * @package    Doit_Easynfe
  * @author     Indexa Development Team <desenvolvimento@indexainternet.com.br>
  * @copyright  Copyright (c) 2011 Indexa - http://www.indexainternet.com.br
  */
-class Easynfe_Nfe_Block_Adminhtml_Sales_Order_Edit_Tab_Info extends Mage_Adminhtml_Block_Widget_Form
+class Doit_Easynfe_Block_Adminhtml_Sales_Order_Edit_Tab_Info extends Mage_Adminhtml_Block_Widget_Form
 {
 
     public function __construct()

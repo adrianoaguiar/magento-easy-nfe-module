@@ -4,26 +4,26 @@
  *
  * @title      Magento Easynfe NF-e
  * @category   General
- * @package    Easynfe_Nfe
+ * @package    Doit_Easynfe
  * @author     Indexa Development Team <desenvolvimento@indexainternet.com.br>
  * @copyright  Copyright (c) 2011 Indexa - http://www.indexainternet.com.br
  */
 
 
-class Easynfe_Nfe_Model_Resource_Directory_Country_Region_City_Collection extends Easynfe_Nfe_Model_Resource_Db_Collection_Abstract{
+class Doit_Easynfe_Model_Resource_Directory_Country_Region_City_Collection extends Doit_Easynfe_Model_Resource_Db_Collection_Abstract{
     
     /**
      * Initialize resource
      *
      */
     public function _construct(){
-        $this->_init('easynfe_nfe/directory_country_region_city');
+        $this->_init('doit_easynfe/directory_country_region_city');
     }
     
     /**
      * Initialize select object
      *
-     * @return Easynfe_Nfe_Model_Resource_Directory_Country_Region_City_Collection
+     * @return Doit_Easynfe_Model_Resource_Directory_Country_Region_City_Collection
      */
     public function _initSelect()
     {
@@ -43,7 +43,7 @@ class Easynfe_Nfe_Model_Resource_Directory_Country_Region_City_Collection extend
      * Filter by NF region
      *
      * @param string|array $nfeRegionId
-     * @return Easynfe_Nfe_Model_Resource_Directory_Country_Region_City_Collection
+     * @return Doit_Easynfe_Model_Resource_Directory_Country_Region_City_Collection
      */
     public function addNfRegionFilter($nfeRegionId)
     {
@@ -61,7 +61,7 @@ class Easynfe_Nfe_Model_Resource_Directory_Country_Region_City_Collection extend
      * Filter by region
      *
      * @param string|array $RegionId
-     * @return Easynfe_Nfe_Model_Resource_Directory_Country_Region_City_Collection
+     * @return Doit_Easynfe_Model_Resource_Directory_Country_Region_City_Collection
      */
     public function addRegionFilter($RegionId)
     {
@@ -80,7 +80,7 @@ class Easynfe_Nfe_Model_Resource_Directory_Country_Region_City_Collection extend
      *
      * @param string $attribute
      * 
-     * @return Easynfe_Nfe_Model_Resource_Directory_Country_Region_City_Collection
+     * @return Doit_Easynfe_Model_Resource_Directory_Country_Region_City_Collection
      */
     public function orderByName()
     {

@@ -4,12 +4,12 @@
  *
  * @title      Magento Easynfe NF-e
  * @category   General
- * @package    Easynfe_Nfe
+ * @package    Doit_Easynfe
  * @author     Indexa Development Team <desenvolvimento@indexainternet.com.br>
  * @copyright  Copyright (c) 2011 Indexa - http://www.indexainternet.com.br
  */
 
-class Easynfe_Nfe_Block_Adminhtml_Sales_Order_Edit extends Mage_Adminhtml_Block_Widget_Form_Container
+class Doit_Easynfe_Block_Adminhtml_Sales_Order_Edit extends Mage_Adminhtml_Block_Widget_Form_Container
 {
     public function __construct()
     {
@@ -35,7 +35,7 @@ class Easynfe_Nfe_Block_Adminhtml_Sales_Order_Edit extends Mage_Adminhtml_Block_
     }
 }
 /*
-class Easynfe_Nfe_Block_Adminhtml_Sales_Order_Edit extends Mage_Adminhtml_Block_Widget_Form_Container
+class Doit_Easynfe_Block_Adminhtml_Sales_Order_Edit extends Mage_Adminhtml_Block_Widget_Form_Container
 {
     
     public function __construct()
@@ -63,7 +63,7 @@ class Easynfe_Nfe_Block_Adminhtml_Sales_Order_Edit extends Mage_Adminhtml_Block_
     public function getFormHtml()
     {
         $html = parent::getFormHtml();
-        $html .= $this->getLayout()->createBlock('easynfe_nfe/adminhtml_sales_order_edit_form')->toHtml();
+        $html .= $this->getLayout()->createBlock('doit_easynfe/adminhtml_sales_order_edit_form')->toHtml();
         return $html;
     }
 

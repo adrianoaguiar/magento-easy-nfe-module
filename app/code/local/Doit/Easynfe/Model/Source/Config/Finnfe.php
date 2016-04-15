@@ -4,12 +4,12 @@
  *
  * @title      Magento Easynfe NF-e
  * @category   General
- * @package    Easynfe_Nfe
+ * @package    Doit_Easynfe
  * @author     Indexa Development Team <desenvolvimento@indexainternet.com.br>
  * @copyright  Copyright (c) 2011 Indexa - http://www.indexainternet.com.br
  */
 
-class Easynfe_Nfe_Model_Source_Config_Finnfe
+class Doit_Easynfe_Model_Source_Config_Finnfe
 {
 
     /**
@@ -21,11 +21,11 @@ class Easynfe_Nfe_Model_Source_Config_Finnfe
     {
         return array(
             array(
-                'value' => Easynfe_Nfe_Helper_Data::NFE_TPIMP_RETRATO,
+                'value' => Doit_Easynfe_Helper_Data::NFE_TPIMP_RETRATO,
                 'label' => Mage::helper('adminhtml')->__('Retrato')
             ),
             array(
-                'value' => Easynfe_Nfe_Helper_Data::NFE_TPIMP_PAISAGEM,
+                'value' => Doit_Easynfe_Helper_Data::NFE_TPIMP_PAISAGEM,
                 'label' => Mage::helper('adminhtml')->__('Paisagem')
             )
         );

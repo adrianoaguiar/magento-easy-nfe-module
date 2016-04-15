@@ -3,14 +3,14 @@
 /**
  * Easynfe - NF-e. 
  *
- * @title      Magento Easynfe NF-e
+ * @title      Magento Doit Easy nfe
  * @category   General
- * @package    Easynfe_Nfe
+ * @package    Doit_Easynfe
  * @author     Indexa Development Team <desenvolvimento@indexainternet.com.br>
  * @copyright  Copyright (c) 2011 Indexa - http://www.indexainternet.com.br
  */
 
-class Easynfe_Nfe_Helper_Data extends Mage_Core_Helper_Abstract
+class Doit_Easynfe_Helper_Data extends Mage_Core_Helper_Abstract
 {
      /**
      * @var string

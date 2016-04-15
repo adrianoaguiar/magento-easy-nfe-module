@@ -5,11 +5,11 @@
  *
  * @title      Magento Easynfe NF-e
  * @category   General
- * @package    Easynfe_Nfe
+ * @package    Doit_Easynfe
  * @author     Indexa Development Team <desenvolvimento@indexainternet.com.br>
  * @copyright  Copyright (c) 2011 Indexa - http://www.indexainternet.com.br
  */
-class Easynfe_Nfe_Model_Nfe {
+class Doit_Easynfe_Model_Nfe {
     
     /**
      * staging server URLs
@@ -37,9 +37,9 @@ class Easynfe_Nfe_Model_Nfe {
         /**
          * get shipment collection
          */
-        $mOrderNfe = Mage::getModel('easynfe_nfe/sales_order_nf')
+        $mOrderNfe = Mage::getModel('doit_easynfe/sales_order_nf')
                 ->getCollection()
-                ->addStatusFilter(Easynfe_Nfe_Helper_Data::NFE_SHIPMENT_STATUS_CREATED);
+                ->addStatusFilter(Doit_Easynfe_Helper_Data::NFE_SHIPMENT_STATUS_CREATED);
 
         $aParams["nfe.NFe"]["nfe.infNFe"]["@versao"] = '3.10';        
         $aParams["nfe.NFe"]["nfe.infNFe"]["nfe.emit"] = $this->_prepareEmitData();
@@ -68,9 +68,9 @@ class Easynfe_Nfe_Model_Nfe {
                     $aParams["nfe.NFe"]["nfe.infNFe"]["nfe.total"] = $aParams["nfe.NFe"]["nfe.infNFe"]["nfe.det"]["nfe.total"];
                     $aParams["nfe.NFe"]["nfe.infNFe"]["nfe.transp"]["nfe.modFrete"] = '0'; // emitente
 
-                    $aParams["nfe.organization"] = Mage::getStoreConfig('easynfe_nfe/acesso/chave');
-                    $aParams["nfe.cert"]["easynfe.certData"] = Mage::getModel('easynfe_nfe/certificado')->load('1')->getCertificado();
-                    $aParams["nfe.cert"]["easynfe.certPasswd"] = Mage::getStoreConfig('easynfe_nfe/acesso/password');
+                    $aParams["nfe.organization"] = Mage::getStoreConfig('doit_easynfe/acesso/chave');
+                    $aParams["nfe.cert"]["easynfe.certData"] = Mage::getModel('doit_easynfe/certificado')->load('1')->getCertificado();
+                    $aParams["nfe.cert"]["easynfe.certPasswd"] = Mage::getStoreConfig('doit_easynfe/acesso/password');
 
                     $aParams["nfe.NFe"]["nfe.infNFe"]["nfe.infAdic"]["nfe.infCpl"] = "Número do Pedido:  " .$mOrder->getIncrementId();
 
@@ -91,16 +91,16 @@ class Easynfe_Nfe_Model_Nfe {
      */
     private function _nfeSend($nfeId, $aParams) {
         //echo '<pre>';print_r($aParams);die();
-        $mRequest = Mage::getModel('easynfe_nfe/sales_order_request');
+        $mRequest = Mage::getModel('doit_easynfe/sales_order_request');
         
         $mRequest->setData('request', Zend_Json::encode($aParams));
         $mRequest->setData('nfe_nf_id', $nfeId);
-        $mRequest->setData('status', Easynfe_Nfe_Helper_Data::NFE_SHIPMENT_STATUS_CREATED);
+        $mRequest->setData('status', Doit_Easynfe_Helper_Data::NFE_SHIPMENT_STATUS_CREATED);
         $mRequest->setData('created_at', date('Y-m-d H:i:s'));
         
         $mRequest->save();
 
-        if( Mage::getStoreConfig('easynfe_nfe/config/tpamb') == '1' ){
+        if( Mage::getStoreConfig('doit_easynfe/config/tpamb') == '1' ){
             $url = self::NFE_REQUEST_PUT_URL;
         }else{
             $url = self::NFE_TEST_REQUEST_PUT_URL;
@@ -113,7 +113,7 @@ class Easynfe_Nfe_Model_Nfe {
             CURLOPT_POST => 1,
             CURLOPT_HEADER => 0,
             CURLOPT_TIMEOUT => 120,
-	        CURLOPT_USERPWD => Mage::getStoreConfig('easynfe_nfe/acesso/chave') . ":" . Mage::getStoreConfig('easynfe_nfe/acesso/pass'),
+	        CURLOPT_USERPWD => Mage::getStoreConfig('doit_easynfe/acesso/chave') . ":" . Mage::getStoreConfig('doit_easynfe/acesso/pass'),
             CURLOPT_HTTPHEADER => array('Content-Type: application/json'),
             CURLOPT_POSTFIELDS => Zend_Json::encode($aParams),
             //CURLOPT_POST=> true,
@@ -128,11 +128,11 @@ class Easynfe_Nfe_Model_Nfe {
 
         if (!$result) {
             $message = curl_error($ch);
-            $mRequest->setData('status', Easynfe_Nfe_Helper_Data::NFE_SHIPMENT_STATUS_ERROR);
+            $mRequest->setData('status', Doit_Easynfe_Helper_Data::NFE_SHIPMENT_STATUS_ERROR);
         } else {
             $sucess = explode(PHP_EOL, $result);
             $message = $result;
-            $mRequest->setData('status', Easynfe_Nfe_Helper_Data::NFE_SHIPMENT_STATUS_PROCESSING);
+            $mRequest->setData('status', Doit_Easynfe_Helper_Data::NFE_SHIPMENT_STATUS_PROCESSING);
         }
 
         curl_close($ch);
@@ -149,9 +149,9 @@ class Easynfe_Nfe_Model_Nfe {
         /**
          * get shipment collection
          */
-        $mNfeRequest = Mage::getModel('easynfe_nfe/sales_order_request')
+        $mNfeRequest = Mage::getModel('doit_easynfe/sales_order_request')
                 ->getCollection()
-                ->addStatusFilter(Easynfe_Nfe_Helper_Data::NFE_SHIPMENT_STATUS_PROCESSING);    
+                ->addStatusFilter(Doit_Easynfe_Helper_Data::NFE_SHIPMENT_STATUS_PROCESSING);    
         if ($mNfeRequest){
             foreach ($mNfeRequest as $request){
                  $this->_getRequestInfo( $request );
@@ -163,13 +163,13 @@ class Easynfe_Nfe_Model_Nfe {
     
     private function _getRequestInfo( $request ){
         
-        if( Mage::getStoreConfig('easynfe_nfe/config/tpamb') == '1' ){
+        if( Mage::getStoreConfig('doit_easynfe/config/tpamb') == '1' ){
             $url = self::NFE_REQUEST_URL;
         }else{
             $url = self::NFE_TEST_REQUEST_URL;
         }
         
-        if( Mage::getStoreConfig('easynfe_nfe/config/tpamb') == '1' ){
+        if( Mage::getStoreConfig('doit_easynfe/config/tpamb') == '1' ){
             $url_base = self::NFE_REQUEST_URL_BASE;
             $url_base_key = self::NFE_REQUEST_PUT_URL;
         }else{
@@ -181,7 +181,7 @@ class Easynfe_Nfe_Model_Nfe {
 	    $defaults = array(
             CURLOPT_HEADER => 0,
             CURLOPT_TIMEOUT => 120,
-	        CURLOPT_USERPWD => Mage::getStoreConfig('easynfe_nfe/acesso/chave') . ":" . Mage::getStoreConfig('easynfe_nfe/acesso/pass'),
+	        CURLOPT_USERPWD => Mage::getStoreConfig('doit_easynfe/acesso/chave') . ":" . Mage::getStoreConfig('doit_easynfe/acesso/pass'),
             CURLOPT_CUSTOMREQUEST => "GET",
             CURLOPT_RETURNTRANSFER => true
         );
@@ -193,8 +193,8 @@ class Easynfe_Nfe_Model_Nfe {
 	
 	    $httpmessage = explode(PHP_EOL, $result);
 
-        $mRequest = Mage::getModel('easynfe_nfe/sales_order_request')->load($request->getId());
-        $orderId = Mage::getModel('easynfe_nfe/sales_order')->load( Mage::getModel('easynfe_nfe/sales_order_nf')->load( $mRequest->getNfeNfId() )->getNfOrderId() )->getOrderId();
+        $mRequest = Mage::getModel('doit_easynfe/sales_order_request')->load($request->getId());
+        $orderId = Mage::getModel('doit_easynfe/sales_order')->load( Mage::getModel('doit_easynfe/sales_order_nf')->load( $mRequest->getNfeNfId() )->getNfOrderId() )->getOrderId();
         $mOrder = Mage::getModel('sales/order')->load($orderId);
         /* @var $mOrder Mage_Sales_Model_Order */  
         
@@ -203,11 +203,11 @@ class Easynfe_Nfe_Model_Nfe {
             if( 'AUTHORIZED' == str_replace(PHP_EOL, '', $httpmessage[0]) ){
             	$context = stream_context_create(array(
             			'http' => array(
-            					'header'  => "Authorization: Basic " . base64_encode(Mage::getStoreConfig('easynfe_nfe/acesso/chave') . ":" . Mage::getStoreConfig('easynfe_nfe/acesso/pass'))
+            					'header'  => "Authorization: Basic " . base64_encode(Mage::getStoreConfig('doit_easynfe/acesso/chave') . ":" . Mage::getStoreConfig('doit_easynfe/acesso/pass'))
             			)
             	));
 
-            	$access_key = file_get_contents( $url_base_key . '/' . Mage::getStoreConfig('easynfe_nfe/acesso/chave') . '/' . Mage::getStoreConfig('easynfe_nfe/config/serie') . '/' . $httpmessage[1] . '/accessKey', false, $context);
+            	$access_key = file_get_contents( $url_base_key . '/' . Mage::getStoreConfig('doit_easynfe/acesso/chave') . '/' . Mage::getStoreConfig('doit_easynfe/config/serie') . '/' . $httpmessage[1] . '/accessKey', false, $context);
                 
                 if( $access_key ){ 
                     
@@ -241,7 +241,7 @@ class Easynfe_Nfe_Model_Nfe {
                      * save tmp xml
                      */
                     $tmp_filename = Mage::getBaseDir('media') . '/nf/tmp/'.$access_key.'.xml';
-                    $xml_content = file_get_contents( $url_base . 'nfe/' . Mage::getStoreConfig('easynfe_nfe/acesso/chave') . '/' . Mage::getStoreConfig('easynfe_nfe/config/serie') . '/' . $httpmessage[1] . '?accessKey=' . $access_key);
+                    $xml_content = file_get_contents( $url_base . 'nfe/' . Mage::getStoreConfig('doit_easynfe/acesso/chave') . '/' . Mage::getStoreConfig('doit_easynfe/config/serie') . '/' . $httpmessage[1] . '?accessKey=' . $access_key);
                     
                     file_put_contents( $tmp_filename, $xml_content);
                     $nfXML = new Zend_Config_Xml( $tmp_filename );
@@ -252,11 +252,11 @@ class Easynfe_Nfe_Model_Nfe {
                         file_put_contents( $xml_filename, $xml_content);
                         
                         $pdf_filename = Mage::getBaseDir('media') . '/nf/pdf/'.$nfXML->protNFe->infProt->chNFe.'.pdf';
-                        $pdf_content = file_get_contents( $url_base . 'nfe/' . Mage::getStoreConfig('easynfe_nfe/acesso/chave') . '/' . Mage::getStoreConfig('easynfe_nfe/config/serie') . '/' . $httpmessage[1] . '/danfe?accessKey=' . $access_key);
+                        $pdf_content = file_get_contents( $url_base . 'nfe/' . Mage::getStoreConfig('doit_easynfe/acesso/chave') . '/' . Mage::getStoreConfig('doit_easynfe/config/serie') . '/' . $httpmessage[1] . '/danfe?accessKey=' . $access_key);
                         file_put_contents( $pdf_filename, $pdf_content );
                        
                         $mRequest->setData('messages', $nfXML->protNFe->infProt->chNFe );
-                        $mRequest->setData('status', Easynfe_Nfe_Helper_Data::NFE_SHIPMENT_STATUS_FINISHED);
+                        $mRequest->setData('status', Doit_Easynfe_Helper_Data::NFE_SHIPMENT_STATUS_FINISHED);
                         $mRequest->setData('finished_at', date('Y-m-d H:i:s'));
 
                          /**
@@ -271,7 +271,7 @@ class Easynfe_Nfe_Model_Nfe {
                         unlink($tmp_filename);
                         /**/
 
-			 if( Mage::getStoreConfig('easynfe_nfe/email/status') ){
+			 if( Mage::getStoreConfig('doit_easynfe/email/status') ){
 		                try{
 		                    
 		                      // send email
@@ -301,11 +301,11 @@ class Easynfe_Nfe_Model_Nfe {
 		                                                            Zend_Mime::ENCODING_BASE64,
 		                                                            basename( $xml_filename )
 		                                                            );
-				     if( Mage::getStoreConfig('easynfe_nfe/email/cc') ){
-				     	 $sendMail->getMail()->addCc( Mage::getStoreConfig('easynfe_nfe/email/cc') );
+				     if( Mage::getStoreConfig('doit_easynfe/email/cc') ){
+				     	 $sendMail->getMail()->addCc( Mage::getStoreConfig('doit_easynfe/email/cc') );
 				     }
-				     if( Mage::getStoreConfig('easynfe_nfe/email/email') &&  Mage::getStoreConfig('easynfe_nfe/email/nome') ){
-				         $senderEmail =  array('name' => Mage::getStoreConfig('easynfe_nfe/email/nome'), 'email' => Mage::getStoreConfig('easynfe_nfe/email/email') );
+				     if( Mage::getStoreConfig('doit_easynfe/email/email') &&  Mage::getStoreConfig('doit_easynfe/email/nome') ){
+				         $senderEmail =  array('name' => Mage::getStoreConfig('doit_easynfe/email/nome'), 'email' => Mage::getStoreConfig('doit_easynfe/email/email') );
 				     }else{
 				          $senderEmail =  'general';
 				     }
@@ -327,7 +327,7 @@ class Easynfe_Nfe_Model_Nfe {
                 
             }
             if( 'REJECTED' == str_replace(PHP_EOL, '', $httpmessage[0]) ){
-                 $mRequest->setData('status', Easynfe_Nfe_Helper_Data::NFE_SHIPMENT_STATUS_ERROR);
+                 $mRequest->setData('status', Doit_Easynfe_Helper_Data::NFE_SHIPMENT_STATUS_ERROR);
                 $mRequest->setData('messages', $httpmessage[1] );
                 $mRequest->setData('finished_at', date('Y-m-d H:i:s'));
                 /**
@@ -337,7 +337,7 @@ class Easynfe_Nfe_Model_Nfe {
                 
             }
             if( 'SEND_FAILED' == str_replace(PHP_EOL, '', $httpmessage[0]) ){
-                $mRequest->setData('status', Easynfe_Nfe_Helper_Data::NFE_SHIPMENT_STATUS_ERROR);
+                $mRequest->setData('status', Doit_Easynfe_Helper_Data::NFE_SHIPMENT_STATUS_ERROR);
                 $mRequest->setData('messages', nl2br(implode(PHP_EOL, $httpmessage)) );
                 $mRequest->setData('finished_at', date('Y-m-d H:i:s'));
                 /**
@@ -346,7 +346,7 @@ class Easynfe_Nfe_Model_Nfe {
                 $mOrder->setStatus('error_nf')->save();
             }
             
-            Mage::getModel('easynfe_nfe/sales_order_nf')->load( $mRequest->getNfeNfId() )->setStatus(Easynfe_Nfe_Helper_Data::NFE_SHIPMENT_STATUS_FINISHED)->setFinishedAt(date('Y-m-d H:i:s'))->save();
+            Mage::getModel('doit_easynfe/sales_order_nf')->load( $mRequest->getNfeNfId() )->setStatus(Doit_Easynfe_Helper_Data::NFE_SHIPMENT_STATUS_FINISHED)->setFinishedAt(date('Y-m-d H:i:s'))->save();
             
             $mRequest->save();
         }
@@ -378,15 +378,15 @@ class Easynfe_Nfe_Model_Nfe {
         $shippingCity = $mShipping->getCity();
         if (is_int($shippingCity)) {
             $aCustomerData['nfe.enderDest']['nfe.cMun'] = $shippingCity;
-            $aCustomerData['nfe.enderDest']['nfe.xMun'] = ( Mage::getModel('easynfe_nfe/directory_country_region_city')->load( trim($shippingCity) )->getName() );
+            $aCustomerData['nfe.enderDest']['nfe.xMun'] = ( Mage::getModel('doit_easynfe/directory_country_region_city')->load( trim($shippingCity) )->getName() );
         } else {
-            $shippingCityId = Mage::getModel('easynfe_nfe/directory_country_region_city')->load(trim($shippingCity), 'NAME')->getId();
+            $shippingCityId = Mage::getModel('doit_easynfe/directory_country_region_city')->load(trim($shippingCity), 'NAME')->getId();
             $aCustomerData['nfe.enderDest']['nfe.cMun'] = $shippingCityId;
             $aCustomerData['nfe.enderDest']['nfe.xMun'] = $shippingCity;
         }
 
         $aCustomerData['nfe.enderDest']['nfe.UF'] = Mage::getModel('directory/region')->load($mShipping->getRegionId())->getCode();
-        $aCustomerData['nfe.enderDest']['nfe.cPais'] = Mage::getModel('easynfe_nfe/directory_country')->load($mShipping->getCountryId(), 'country_id')->getId();
+        $aCustomerData['nfe.enderDest']['nfe.cPais'] = Mage::getModel('doit_easynfe/directory_country')->load($mShipping->getCountryId(), 'country_id')->getId();
         $aCustomerData['nfe.enderDest']['nfe.xPais'] = Mage::app()->getLocale()->getCountryTranslation($mShipping->getCountryId());
         $aCustomerData['nfe.enderDest']['nfe.CEP'] = str_replace('-', '', $mShipping->getPostcode());
 
@@ -468,7 +468,7 @@ class Easynfe_Nfe_Model_Nfe {
             /**
              * check CFOP code
              */
-            $aOrderItem[$cKey]['nfe.prod']['nfe.CFOP'] = ( $this->getCustomerUf($mOrderShipment) == Mage::getStoreConfig('easynfe_nfe/emit/cuf') ? '5102' : '6108' );
+            $aOrderItem[$cKey]['nfe.prod']['nfe.CFOP'] = ( $this->getCustomerUf($mOrderShipment) == Mage::getStoreConfig('doit_easynfe/emit/cuf') ? '5102' : '6108' );
             $aOrderItem[$cKey]['nfe.prod']['nfe.NCM'] = (string) ( $_shipmentItem->getNfeNcm() ? $_shipmentItem->getNfeNcm() : $mProduct->getNfeNcm() );
 
             $aOrderItem[$cKey]['nfe.prod']['nfe.uCom'] = (string) ( $_shipmentItem->getNfeUcom() ? $_shipmentItem->getNfeUcom() : $mProduct->getNfeUcom() );
@@ -544,27 +544,27 @@ class Easynfe_Nfe_Model_Nfe {
      */
     private function _prepareIdeData($mOrderShipment) {
 
-        $aIdeData['nfe.cUF'] = Mage::getStoreConfig('easynfe_nfe/config/cuf');
+        $aIdeData['nfe.cUF'] = Mage::getStoreConfig('doit_easynfe/config/cuf');
         $aIdeData['nfe.cNF'] = '10000001'; // rewrited on webservice ;
-        $aIdeData['nfe.natOp'] = Mage::getStoreConfig('easynfe_nfe/config/natop') == '1' ? 'Venda de Mercadorias' : '';
+        $aIdeData['nfe.natOp'] = Mage::getStoreConfig('doit_easynfe/config/natop') == '1' ? 'Venda de Mercadorias' : '';
         $aIdeData['nfe.indPag'] = '0'; //$mOrder->getPayment()->getMethod(); // rewrited on webservice 
-        $aIdeData['nfe.mod'] = Mage::getStoreConfig('easynfe_nfe/config/mod');
-        $aIdeData['nfe.serie'] = Mage::getStoreConfig('easynfe_nfe/config/serie') ;
+        $aIdeData['nfe.mod'] = Mage::getStoreConfig('doit_easynfe/config/mod');
+        $aIdeData['nfe.serie'] = Mage::getStoreConfig('doit_easynfe/config/serie') ;
         $aIdeData['nfe.nNF'] = '1'; // rewrited on webservice 
         $aIdeData['nfe.dSaiEnt'] = date('Y-m-d'); // data de saida ou entrada do produtogn
         $aIdeData['nfe.hSaiEnt'] = date('H:i:s'); // hora de saida ou entrada do produto
-        $aIdeData['nfe.tpNF'] = Easynfe_Nfe_Helper_Data::NFE_TPNF_SAIDA; // tipo da operação 0 - entrada, 1 - saida
-        $aIdeData['nfe.cMunFG'] = Mage::getStoreConfig('easynfe_nfe/config/cmunfg');
-        $aIdeData['nfe.tpImp'] = Mage::getStoreConfig('easynfe_nfe/config/tpimp'); // tipo da impressao 1 - retrato, 2 - paisagem
-        $aIdeData['nfe.tpEmis'] = Easynfe_Nfe_Helper_Data::NFE_TPEMIS_NORMAL; // tipo de emissao 
+        $aIdeData['nfe.tpNF'] = Doit_Easynfe_Helper_Data::NFE_TPNF_SAIDA; // tipo da operação 0 - entrada, 1 - saida
+        $aIdeData['nfe.cMunFG'] = Mage::getStoreConfig('doit_easynfe/config/cmunfg');
+        $aIdeData['nfe.tpImp'] = Mage::getStoreConfig('doit_easynfe/config/tpimp'); // tipo da impressao 1 - retrato, 2 - paisagem
+        $aIdeData['nfe.tpEmis'] = Doit_Easynfe_Helper_Data::NFE_TPEMIS_NORMAL; // tipo de emissao 
         $aIdeData['nfe.cDV'] = '1'; // send as null 
-        $aIdeData['nfe.tpAmb'] = Mage::getStoreConfig('easynfe_nfe/config/tpamb'); // tipo de emissao 
-        $aIdeData['nfe.finNFe'] = Easynfe_Nfe_Helper_Data::NFE_FINNFE_NORMAL; // numero da nota fiscal
-        $aIdeData['nfe.procEmi'] = Easynfe_Nfe_Helper_Data::NFE_PROCEMI_DEFAULT; // tipo de emissao
+        $aIdeData['nfe.tpAmb'] = Mage::getStoreConfig('doit_easynfe/config/tpamb'); // tipo de emissao 
+        $aIdeData['nfe.finNFe'] = Doit_Easynfe_Helper_Data::NFE_FINNFE_NORMAL; // numero da nota fiscal
+        $aIdeData['nfe.procEmi'] = Doit_Easynfe_Helper_Data::NFE_PROCEMI_DEFAULT; // tipo de emissao
         $aIdeData['nfe.verProc'] = 1; //tipo de emissao
-        $aIdeData['nfe.indFinal'] = Easynfe_Nfe_Helper_Data::NFE_TIPO_CONSUMIDOR; // tipo do consumidor (1 - consumidor final)
-        $aIdeData['nfe.indPres'] = Easynfe_Nfe_Helper_Data::NFE_PRESENCA_COMPRADOR_ESTABELECIMENTO; // presença do comprador no estabelecimento (9 - operação não presencial, outros.)        
-        $aIdeData['nfe.idDest'] = ( $this->getCustomerUf($mOrderShipment) == Mage::getStoreConfig('easynfe_nfe/emit/cuf') ? '1' : '2' );
+        $aIdeData['nfe.indFinal'] = Doit_Easynfe_Helper_Data::NFE_TIPO_CONSUMIDOR; // tipo do consumidor (1 - consumidor final)
+        $aIdeData['nfe.indPres'] = Doit_Easynfe_Helper_Data::NFE_PRESENCA_COMPRADOR_ESTABELECIMENTO; // presença do comprador no estabelecimento (9 - operação não presencial, outros.)        
+        $aIdeData['nfe.idDest'] = ( $this->getCustomerUf($mOrderShipment) == Mage::getStoreConfig('doit_easynfe/emit/cuf') ? '1' : '2' );
         return $aIdeData;
     }
 
@@ -575,30 +575,30 @@ class Easynfe_Nfe_Model_Nfe {
      */
     private function _prepareEmitData() {
 
-        $aEmitData['nfe.CNPJ'] = str_replace(array('.', '/', '-'), array('', '', ''), Mage::getStoreConfig('easynfe_nfe/emit/cnpj'));
-        $aEmitData['nfe.xNome'] = Mage::getStoreConfig('easynfe_nfe/emit/nome');
+        $aEmitData['nfe.CNPJ'] = str_replace(array('.', '/', '-'), array('', '', ''), Mage::getStoreConfig('doit_easynfe/emit/cnpj'));
+        $aEmitData['nfe.xNome'] = Mage::getStoreConfig('doit_easynfe/emit/nome');
         
-        $aEmitData['nfe.enderEmit']['nfe.xLgr'] = Mage::getStoreConfig('easynfe_nfe/emit/xlgr');
-        $aEmitData['nfe.enderEmit']['nfe.nro'] = Mage::getStoreConfig('easynfe_nfe/emit/numero');
-        $aEmitData['nfe.enderEmit']['nfe.xBairro'] = Mage::getStoreConfig('easynfe_nfe/emit/bairro');
-        $aEmitData['nfe.enderEmit']['nfe.cMun'] = Mage::getStoreConfig('easynfe_nfe/emit/cmun');
-        $aEmitData['nfe.enderEmit']['nfe.xMun'] = ( Mage::getModel('easynfe_nfe/directory_country_region_city')->load( Mage::getStoreConfig('easynfe_nfe/emit/cmun') )->getName() );
-	    $aEmitData['nfe.enderEmit']['nfe.fone'] = (string) Mage::getStoreConfig('easynfe_nfe/emit/fone') ? Mage::getStoreConfig('easynfe_nfe/emit/fone'): '1130643003' ;
+        $aEmitData['nfe.enderEmit']['nfe.xLgr'] = Mage::getStoreConfig('doit_easynfe/emit/xlgr');
+        $aEmitData['nfe.enderEmit']['nfe.nro'] = Mage::getStoreConfig('doit_easynfe/emit/numero');
+        $aEmitData['nfe.enderEmit']['nfe.xBairro'] = Mage::getStoreConfig('doit_easynfe/emit/bairro');
+        $aEmitData['nfe.enderEmit']['nfe.cMun'] = Mage::getStoreConfig('doit_easynfe/emit/cmun');
+        $aEmitData['nfe.enderEmit']['nfe.xMun'] = ( Mage::getModel('doit_easynfe/directory_country_region_city')->load( Mage::getStoreConfig('doit_easynfe/emit/cmun') )->getName() );
+	    $aEmitData['nfe.enderEmit']['nfe.fone'] = (string) Mage::getStoreConfig('doit_easynfe/emit/fone') ? Mage::getStoreConfig('doit_easynfe/emit/fone'): '1130643003' ;
 
-        $aEmitData['nfe.enderEmit']['nfe.UF'] = Mage::getModel('directory/region')->load( Mage::getModel('easynfe_nfe/directory_country_region')->load( Mage::getStoreConfig('easynfe_nfe/emit/cuf') )->getRegionId() )->getCode();
-        $aEmitData['nfe.enderEmit']['nfe.CEP'] = Mage::getStoreConfig('easynfe_nfe/emit/cep');
-        $aEmitData['nfe.enderEmit']['nfe.cPais'] = Mage::getStoreConfig('easynfe_nfe/emit/cpais');
-        $aEmitData['nfe.enderEmit']['nfe.xPais'] = Mage::app()->getLocale()->getCountryTranslation(Mage::getModel('easynfe_nfe/directory_country')->load(Mage::getStoreConfig('easynfe_nfe/emit/cpais'))->getCountryId());
+        $aEmitData['nfe.enderEmit']['nfe.UF'] = Mage::getModel('directory/region')->load( Mage::getModel('doit_easynfe/directory_country_region')->load( Mage::getStoreConfig('doit_easynfe/emit/cuf') )->getRegionId() )->getCode();
+        $aEmitData['nfe.enderEmit']['nfe.CEP'] = Mage::getStoreConfig('doit_easynfe/emit/cep');
+        $aEmitData['nfe.enderEmit']['nfe.cPais'] = Mage::getStoreConfig('doit_easynfe/emit/cpais');
+        $aEmitData['nfe.enderEmit']['nfe.xPais'] = Mage::app()->getLocale()->getCountryTranslation(Mage::getModel('doit_easynfe/directory_country')->load(Mage::getStoreConfig('doit_easynfe/emit/cpais'))->getCountryId());
         
-        $aEmitData['nfe.IE'] = (string)str_replace(".", "", Mage::getStoreConfig('easynfe_nfe/emit/ie'));
-        $aEmitData['nfe.CRT'] = (string)Mage::getStoreConfig('easynfe_nfe/emit/crt');
+        $aEmitData['nfe.IE'] = (string)str_replace(".", "", Mage::getStoreConfig('doit_easynfe/emit/ie'));
+        $aEmitData['nfe.CRT'] = (string)Mage::getStoreConfig('doit_easynfe/emit/crt');
 
         return $aEmitData;
     }
 
     private function getCustomerUf($mOrderShipment) {
         $mShipping = $mOrderShipment->getOrder()->getShippingAddress();
-        return Mage::getModel('easynfe_nfe/directory_country_region')->load($mShipping->getRegionId(), 'region_id')->getId();
+        return Mage::getModel('doit_easynfe/directory_country_region')->load($mShipping->getRegionId(), 'region_id')->getId();
     }   
     
 }

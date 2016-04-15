@@ -4,12 +4,12 @@
  *
  * @title      Magento Easynfe NF-e
  * @category   General
- * @package    Easynfe_Nfe
+ * @package    Doit_Easynfe
  * @author     Indexa Development Team <desenvolvimento@indexainternet.com.br>
  * @copyright  Copyright (c) 2011 Indexa - http://www.indexainternet.com.br
  */
 
-class Easynfe_Nfe_Model_Source_Config_Tpnf
+class Doit_Easynfe_Model_Source_Config_Tpnf
 {
     /**
      * Retrieve CRT information
@@ -20,11 +20,11 @@ class Easynfe_Nfe_Model_Source_Config_Tpnf
     {
         return array(
             array(
-                'value' => Easynfe_Nfe_Helper_Data::NFE_TPNF_ENTRADA,
+                'value' => Doit_Easynfe_Helper_Data::NFE_TPNF_ENTRADA,
                 'label' => Mage::helper('adminhtml')->__('Entrada')
             ),
             array(
-                'value' => Easynfe_Nfe_Helper_Data::NFE_TPNF_SAIDA,
+                'value' => Doit_Easynfe_Helper_Data::NFE_TPNF_SAIDA,
                 'label' => Mage::helper('adminhtml')->__('Saída')
             )
         );

@@ -5,12 +5,12 @@
  *
  * @title      Magento Easynfe NF-e
  * @category   General
- * @package    Easynfe_Nfe
+ * @package    Doit_Easynfe
  * @author     Indexa Development Team <desenvolvimento@indexainternet.com.br>
  * @copyright  Copyright (c) 2011 Indexa - http://www.indexainternet.com.br
  */
 
-class Easynfe_Nfe_Model_Resource_Certificado extends Mage_Core_Model_Mysql4_Abstract
+class Doit_Easynfe_Model_Resource_Certificado extends Mage_Core_Model_Mysql4_Abstract
 {
      /**
      * Define main table and id field name
@@ -18,7 +18,7 @@ class Easynfe_Nfe_Model_Resource_Certificado extends Mage_Core_Model_Mysql4_Abst
      * @return void
      */
     protected function _construct(){
-        $this->_init('easynfe_nfe/certificado', 'id');
+        $this->_init('doit_easynfe/certificado', 'id');
     }
     
     /**
@@ -36,7 +36,7 @@ class Easynfe_Nfe_Model_Resource_Certificado extends Mage_Core_Model_Mysql4_Abst
         
         $sFile = base64_encode( file_get_contents( $_FILES['groups']['tmp_name']['acesso']['fields']['importcert']['value'] ) );
         
-        $mCertificado = Mage::getModel('easynfe_nfe/certificado');
+        $mCertificado = Mage::getModel('doit_easynfe/certificado');
         
         /**
          * check if certificado exists to update
@@ -58,6 +58,6 @@ class Easynfe_Nfe_Model_Resource_Certificado extends Mage_Core_Model_Mysql4_Abst
      * @return int
      */
     public function hasCertificado(){
-        return Mage::getModel('easynfe_nfe/certificado')->load('1')->getId();
+        return Mage::getModel('doit_easynfe/certificado')->load('1')->getId();
     }
 }

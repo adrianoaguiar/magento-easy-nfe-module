@@ -5,12 +5,12 @@
  *
  * @title      Magento Easynfe NF-e
  * @category   General
- * @package    Easynfe_Nfe
+ * @package    Doit_Easynfe
  * @author     Indexa Development Team <desenvolvimento@indexainternet.com.br>
  * @copyright  Copyright (c) 2011 Indexa - http://www.indexainternet.com.br
  */
 
-class Easynfe_Nfe_Model_Certificado extends Mage_Core_Model_Abstract
+class Doit_Easynfe_Model_Certificado extends Mage_Core_Model_Abstract
 {
      /**
      * define model key
@@ -18,7 +18,7 @@ class Easynfe_Nfe_Model_Certificado extends Mage_Core_Model_Abstract
      * @return void
      */
     public function _construct(){
-        $this->_init('easynfe_nfe/certificado');
+        $this->_init('doit_easynfe/certificado');
     }
    
 }

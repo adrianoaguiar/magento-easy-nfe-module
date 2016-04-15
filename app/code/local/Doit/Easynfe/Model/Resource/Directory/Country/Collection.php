@@ -4,20 +4,20 @@
  *
  * @title      Magento Easynfe NF-e
  * @category   General
- * @package    Easynfe_Nfe
+ * @package    Doit_Easynfe
  * @author     Indexa Development Team <desenvolvimento@indexainternet.com.br>
  * @copyright  Copyright (c) 2011 Indexa - http://www.indexainternet.com.br
  */
 
 
-class Easynfe_Nfe_Model_Resource_Directory_Country_Collection extends Easynfe_Nfe_Model_Resource_Db_Collection_Abstract{
+class Doit_Easynfe_Model_Resource_Directory_Country_Collection extends Doit_Easynfe_Model_Resource_Db_Collection_Abstract{
     
     /**
      * Initialize resource
      *
      */
     public function _construct(){
-        $this->_init('easynfe_nfe/directory_country');
+        $this->_init('doit_easynfe/directory_country');
     }
 }
 

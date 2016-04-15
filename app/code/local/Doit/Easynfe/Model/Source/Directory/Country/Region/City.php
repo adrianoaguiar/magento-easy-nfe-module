@@ -5,11 +5,11 @@
  *
  * @title      Magento Easynfe NF-e
  * @category   General
- * @package    Easynfe_Nfe
+ * @package    Doit_Easynfe
  * @author     Indexa Development Team <desenvolvimento@indexainternet.com.br>
  * @copyright  Copyright (c) 2011 Indexa - http://www.indexainternet.com.br
  */
-class Easynfe_Nfe_Model_Source_Directory_Country_Region_City {
+class Doit_Easynfe_Model_Source_Directory_Country_Region_City {
 
     /**
      * Retrieve NF-e cities
@@ -17,8 +17,8 @@ class Easynfe_Nfe_Model_Source_Directory_Country_Region_City {
      * @return array
      */
     public function toOptionArray(){
-        //$mCity = Mage::getModel('easynfe_nfe/directory_country_region_city')->getCollection();
-        /* @var Easynfe_Nfe_Model_Directory_Country_Region_Collection */
+        //$mCity = Mage::getModel('doit_easynfe/directory_country_region_city')->getCollection();
+        /* @var Doit_Easynfe_Model_Directory_Country_Region_Collection */
         /*
         if (count($mCity) > 0) {
             foreach ($mCity as $key => $cities) {

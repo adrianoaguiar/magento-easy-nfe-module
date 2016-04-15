@@ -1,23 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-/**
- * Easynfe - NF-e. 
- *
- * @title      Magento Easynfe NF-e
- * @category   General
- * @package    Easynfe_Nfe
- * @author     Indexa Development Team <desenvolvimento@indexainternet.com.br>
- * @copyright  Copyright (c) 2011 Indexa - http://www.indexainternet.com.br
- */
- -->
 <config>
     <modules>
-        <Easynfe_Nfe>
-            <version>0.1.0</version>
-        </Easynfe_Nfe>
+	<Doit_Easynfe>
+	    <version>0.1.0</version>
+	</Doit_Easynfe>
     </modules>
+    
     <global>
-        <template>
+	<template>
             <email>
                 <easynfe_email translate="label" module="nfe">
                     <label>EasyNFe Template</label>
@@ -26,6 +16,7 @@
                 </easynfe_email>
             </email>
         </template>
+	
         <fieldsets>
             <sales_convert_quote_item>                           
                 <nfe_ncm>
@@ -53,13 +44,15 @@
                 </nfe_orig>
             </sales_convert_order_item>
         </fieldsets>
+	
         <models>
-            <easynfe_nfe>
-                <class>Easynfe_Nfe_Model</class>
-                <resourceModel>easynfe_nfe_resource</resourceModel>                
-            </easynfe_nfe>
-            <easynfe_nfe_resource>
-                <class>Easynfe_Nfe_Model_Resource</class>
+            <doit_easynfe>
+                <class>Doit_Easynfe_Model</class>
+                <resourceModel>doit_easynfe_resource</resourceModel>                
+            </doit_easynfe>
+	    
+            <doit_easynfe_resource>
+                <class>Doit_Easynfe_Model_Resource</class>
                 <entities>
                     <directory_country>
                         <table>nfe_directory_country</table>
@@ -83,151 +76,164 @@
                         <table>nfe_certificado</table>
                     </certificado>
                 </entities>
-            </easynfe_nfe_resource>                
+            </doit_easynfe_resource>                
         </models>
+	
         <resources>
-            <easynfe_nfe_setup>
+            <doit_easynfe_setup>
                 <setup>
-                    <module>Easynfe_Nfe</module>
+                    <module>Doit_Easynfe</module>
                 </setup>
                 <connection>
                     <use>directory_setup</use>
                 </connection>
-            </easynfe_nfe_setup>
+            </doit_easynfe_setup>
         </resources>
+	
         <blocks>
-            <easynfe_nfe>
-                <class>Easynfe_Nfe_Block</class>
-            </easynfe_nfe>
+            <doit_easynfe>
+                <class>Doit_Easynfe_Block</class>
+            </doit_easynfe>
+	    
             <customer>
                 <rewrite>
-                    <account_dashboard_address>Easynfe_Nfe_Block_Customer_Account_Dashboard_Address</account_dashboard_address>
-                    <address_book>Easynfe_Nfe_Block_Customer_Address_Book</address_book>
+                    <account_dashboard_address>Doit_Easynfe_Block_Customer_Account_Dashboard_Address</account_dashboard_address>
+                    <address_book>Doit_Easynfe_Block_Customer_Address_Book</address_book>
                 </rewrite>
             </customer>
-        </blocks>	            
+        </blocks>
+	            
         <helpers>
             <nfe>
-                <class>Easynfe_Nfe_Helper</class>
+                <class>Doit_Easynfe_Helper</class>
             </nfe>
         </helpers>	
-        <events>
+        
+	<events>
             <customer_address_format>
                <observers>
-                    <easynfe_nfe_address_format>
+                    <doit_easynfe_address_format>
                         <type>singleton</type>
-                        <class>Easynfe_Nfe_Model_Observer</class>
+                        <class>Doit_Easynfe_Model_Observer</class>
                         <method>formatAddress</method>
-                    </easynfe_nfe_address_format>
+                    </doit_easynfe_address_format>
                 </observers>
             </customer_address_format>                
+	    
             <checkout_submit_all_after>
                 <observers>
-                    <easynfe_nfe_checkout_submit_all_after>
+                    <doit_easynfe_checkout_submit_all_after>
                         <type>singleton</type>
-                        <class>Easynfe_Nfe_Model_Observer</class>
+                        <class>Doit_Easynfe_Model_Observer</class>
                         <method>salesOrderSaveNf</method>
-                    </easynfe_nfe_checkout_submit_all_after>
+                    </doit_easynfe_checkout_submit_all_after>
                 </observers>
             </checkout_submit_all_after>    
-            <sales_quote_add_item>
+            
+	    <sales_quote_add_item>
                 <observers>
-                    <easynfe_nfe_sales_add_quote_item>
+                    <doit_easynfe_sales_add_quote_item>
                         <type>singleton</type>
-                        <class>easynfe_nfe/observer</class>
+                        <class>doit_easynfe/observer</class>
                         <method>salesQuoteAddItem</method>
-                    </easynfe_nfe_sales_add_quote_item>
+                    </doit_easynfe_sales_add_quote_item>
                 </observers>
             </sales_quote_add_item>
         </events>
     </global>
+    
     <frontend>
         <routers>
-            <easynfe_nfe>
+            <easynfe>
                 <use>standard</use>
                 <args>
-                    <module>Easynfe_Nfe</module>
-                    <frontName>nfe</frontName>
+                    <module>Doit_Easynfe</module>
+                    <frontName>easynfe</frontName>
                 </args>
-            </easynfe_nfe>
-        </routers>   
+            </easynfe>
+        </routers>
+	
         <layout>
             <updates>
-                <easynfe_nfe>
-                    <file>easynfe_nfe.xml</file>
-                </easynfe_nfe>
+                <doit_easynfe>
+                    <file>doit_easynfe.xml</file>
+                </doit_easynfe>
             </updates>
         </layout>
     </frontend>
+    
     <admin>
-        <routers>
-            <nfe>
-                <use>admin</use>
-                <args>
-                    <module>Easynfe_Nfe</module>
-                    <frontName>nfe</frontName>
-                </args>
-            </nfe>
-        </routers>
+	<routers>
+	    <easynfe>
+		<use>admin</use>
+		<args>
+		    <module>Doit_Easynfe</module>
+		    <frontName>easynfe</frontName>
+		</args>
+	    </easynfe>
+	</routers>
     </admin>
     
     <adminhtml>
         <translate>
             <modules>
-                <Easynfe_Nfe>
+                <Doit_Easynfe>
                     <files>
-                        <default>Easynfe_Nfe.csv</default>
+                        <default>Doit_Easynfe.csv</default>
                     </files>
-                </Easynfe_Nfe>
+                </Doit_Easynfe>
             </modules>
         </translate>
 
         <layout>
             <updates>
-                <easynfe_nfe>
-                    <file>easynfe_nfe.xml</file>
-                </easynfe_nfe>
+                <doit_easynfe>
+                    <file>doit_easynfe.xml</file>
+                </doit_easynfe>
             </updates>
         </layout>
+	
         <events>           
             <sales_order_shipment_save_after>
                 <observers>
-                    <easynfe_nfe>
+                    <doit_easynfe>
                         <type>singleton</type>
-                        <class>easynfe_nfe/observer</class>
+                        <class>doit_easynfe/observer</class>
                         <method>salesOrderShipmentSaveAfter</method>
-                    </easynfe_nfe>
+                    </doit_easynfe>
                 </observers>
-            </sales_order_shipment_save_after>   
+            </sales_order_shipment_save_after>
+	       
             <core_block_abstract_to_html_after>
                 <observers>
-                    <easynfe_nfe_blocks>
+                    <doit_easynfe_blocks>
                         <type>singleton</type>
-                        <class>easynfe_nfe/observer</class>
+                        <class>doit_easynfe/observer</class>
                         <method>salesOrderNfeBlock</method>
-                    </easynfe_nfe_blocks>
+                    </doit_easynfe_blocks>
                 </observers>
             </core_block_abstract_to_html_after>   
         </events>	
-    </adminhtml> 
+    </adminhtml>
+    
     <crontab>
-        <jobs>
-            <easynfe_nfe_process>
-                <schedule>
-                    <cron_expr>* * * * *</cron_expr>
-                </schedule>
-                <run>
-                    <model>easynfe_nfe/observer::nfeProcess</model>
-                </run>
-            </easynfe_nfe_process>
-            <easynfe_nfe_create>
-                <schedule>
-                    <cron_expr>* * * * *</cron_expr>
-                </schedule>
-                <run>
-                    <model>easynfe_nfe/observer::updateInfo</model>
-                </run>
-            </easynfe_nfe_create>
-        </jobs>
+	<jobs>
+	    <doit_easynfe_process>
+		<schedule>
+		    <cron_expr>* * * * *</cron_expr>
+		</schedule>
+		<run>
+		    <model>doit_easynfe/observer::nfeProcess</model>
+		</run>
+	    </doit_easynfe_process>
+	    <doit_easynfe_create>
+		<schedule>
+		    <cron_expr>* * * * *</cron_expr>
+		</schedule>
+		<run>
+		    <model>doit_easynfe/observer::updateInfo</model>
+		</run>
+	    </doit_easynfe_create>
+	</jobs>
     </crontab>
 </config>

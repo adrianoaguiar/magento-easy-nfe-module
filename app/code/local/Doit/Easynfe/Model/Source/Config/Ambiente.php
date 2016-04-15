@@ -4,12 +4,12 @@
  *
  * @title      Magento Easynfe NF-e
  * @category   General
- * @package    Easynfe_Nfe
+ * @package    Doit_Easynfe
  * @author     Indexa Development Team <desenvolvimento@indexainternet.com.br>
  * @copyright  Copyright (c) 2011 Indexa - http://www.indexainternet.com.br
  */
 
-class Easynfe_Nfe_Model_Source_Config_Ambiente
+class Doit_Easynfe_Model_Source_Config_Ambiente
 {
     /**
      * Retrieve envoirment information
@@ -20,11 +20,11 @@ class Easynfe_Nfe_Model_Source_Config_Ambiente
     {
         return array(
             array(
-                'value' => Easynfe_Nfe_Helper_Data::NFE_TIPO_AMBIENTE_PRODUCAO,
+                'value' => Doit_Easynfe_Helper_Data::NFE_TIPO_AMBIENTE_PRODUCAO,
                 'label' => Mage::helper('adminhtml')->__('Produção')
             ),
             array(
-                'value' => Easynfe_Nfe_Helper_Data::NFE_TIPO_AMBIENTE_HOMOLOGACAO,
+                'value' => Doit_Easynfe_Helper_Data::NFE_TIPO_AMBIENTE_HOMOLOGACAO,
                 'label' => Mage::helper('adminhtml')->__('Homologação')
             ),
         );
